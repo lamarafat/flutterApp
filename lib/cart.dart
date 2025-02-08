@@ -1,3 +1,4 @@
+import 'package:app_1/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,10 +10,12 @@ class cart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFE8BFAA),
-        title: Text(
-          "True Style",
-          style: GoogleFonts.sedgwickAve(
-              textStyle: const TextStyle(fontSize: 32), color: Colors.black),
+        title: Center(
+          child: Text(
+            "True Style",
+            style: GoogleFonts.sedgwickAve(
+                textStyle: const TextStyle(fontSize: 32), color: Colors.black),
+          ),
         ),
       ),
       backgroundColor: const Color(0xFFE8BFAA),
@@ -47,7 +50,8 @@ class cart extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Home()));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(

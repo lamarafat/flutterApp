@@ -1,3 +1,4 @@
+import 'package:app_1/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -123,25 +124,14 @@ class Search extends StatelessWidget {
         backgroundColor: const Color(0xFFE8BFAA),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Home()));
           },
           icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: Column(
         children: [
-          Text(
-            " $selectedIndex",
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            "Style: $selectedStyleName",
-            style: GoogleFonts.openSans(
-              textStyle:
-                  const TextStyle(fontSize: 24, color: Color(0xFF2d2d2d)),
-            ),
-          ),
           const SizedBox(height: 20),
           Expanded(
             child: Padding(

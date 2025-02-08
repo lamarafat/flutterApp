@@ -1,10 +1,17 @@
+import 'package:app_1/search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_1/Home.dart';
 
-class style extends StatelessWidget {
+class style extends StatefulWidget {
   const style({super.key});
-  static const List<String> images = [
+
+  @override
+  State<style> createState() => _StyleSelectionState();
+}
+
+class _StyleSelectionState extends State<style> {
+  List<String> images = [
     'image/trueStyle/style1.png',
     'image/trueStyle/style2.png',
     'image/trueStyle/style3.png',
@@ -16,7 +23,7 @@ class style extends StatelessWidget {
     'image/trueStyle/style9.png',
   ];
 
-  static const List<String> styles = [
+  List<String> styles = [
     "Classic",
     "Casual",
     "Streetwear",
@@ -27,6 +34,8 @@ class style extends StatelessWidget {
     "Preppy",
     "Vintage",
   ];
+
+  int? selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +48,7 @@ class style extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Home(), 
+                  builder: (context) => Home(),
                 ),
               );
             },
@@ -73,14 +82,26 @@ class style extends StatelessWidget {
                 itemBuilder: (context, i) {
                   return GestureDetector(
                     onTap: () {
+                      setState(() {
+                        selectedIndex = i;
+                      });
+                      print("User selected style index: $selectedIndex");
                     },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
+                    child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 252, 204, 204),
+                        color: selectedIndex == i
+                            ? const Color.fromARGB(255, 251, 235, 231)
+                                .withOpacity(0.3)
+                            : const Color.fromARGB(255, 252, 204, 204),
                         borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: selectedIndex == i
+                              ? const Color.fromARGB(255, 251, 235, 231)
+                              : const Color.fromARGB(255, 252, 220, 220),
+                          width: 2,
+                        ),
                       ),
                       child: Column(
                         children: [
@@ -102,12 +123,27 @@ class style extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Please select a style before continuing!"),
-                    backgroundColor: Colors.red,
-                  ),
-                );
+                if (selectedIndex != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Selected style: ${styles[selectedIndex!]}",
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                              fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please select a style before continuing!"),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               },
               child: Text(
                 "Done",
